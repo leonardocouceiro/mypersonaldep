@@ -1871,11 +1871,10 @@
                         </div>
                         <div class="panel-body" id="visualizacao">
                             <div class="text-center">
-                                <img src="images/ArmasBrasil.png" class="img-rounded" width="100" height="100">
-                                <p style="font-weight:bold">INSS - Instituto Nacional do Seguro Social</p>
+                                <p><b>INSTITUTO NACIONAL DO SEGURO SOCIAL</b></p>
+                                <p><b>Central de Analise - Gex Vale - SR I, em {{dataDespacho}}</b></p> <!-- <p class="text-right">{{orgaoUsuario}}, em {{dataDespacho}}</p>  -->
                             </div>
-                            <p class="text-right">{{orgaoUsuario}}, em {{dataDespacho}}</p>
-                            <div style="margin-left:100px">
+                             <div style="margin-left:100px">
                                 <p style="margin:0px"><i><b>{{especieExibicao}}: </b></i>{{especieSelecionada.codigo === "CTC" ? null : especieSelecionada.codigo + "/"}}{{numeroBeneficio}}<br />
                                 <p style="margin:0px"><i><b>Int: </b></i><span class="text-uppercase">{{nomeInteressado}}</span><br />
                                 <p><i><b>Assunto: </b></i>{{tipoDespacho}} do Requerimento</p><br />
@@ -1905,6 +1904,11 @@
                                 <div class="btn-group">
                                     <a class="btn btn-primary" target="_blank" ng-href="{{url}}" ng-mousedown="imprimirDespacho()">Imprimir <span class="glyphicon glyphicon-print"></span></a>
                                 </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-success" ng-click="copiaDespacho()">
+                                        Copiar <span class="glyphicon glyphicon-copy"></span>
+                                    </button> 
+                                </div>                                    
                             </div>
                         </div>
                     </div>
