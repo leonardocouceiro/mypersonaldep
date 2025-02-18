@@ -141,8 +141,8 @@
             <ul class="nav nav-tabs">
                 <li class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#despacho"><strong>Despachos</strong></a></li>
-                    <li><a data-toggle="tab" href="#exigencia"><strong>Exigência</strong></a></li>
-                    <li><a data-toggle="tab" href="#recurso"><strong>Recurso</strong></a></li>
+                    <li><a data-toggle="tab" href="#exigencia"><strong>FormularExigência</strong></a></li>
+                    <li><a data-toggle="tab" href="#recurso"><strong>Despachos Recurso</strong></a></li>
                     <!--             
                     <li><a data-toggle="tab" href="#revisao"><strong>Revisao</strong></a></li>
                     <li><a data-toggle="tab" href="#prevjur"><strong>PrevJur</strong></a></li> -->
@@ -1968,24 +1968,146 @@
 
                     </div>
 
-                    <div id="Formular Exigencia" class="container-fluid tab-pane fade">
+                    <div id="exigencia" class="container-fluid tab-pane fade">
                     <br/>
                     <!-- Abas secundárias dentro da aba Exigência -->
                     <ul class="nav nav-pills">
-                        <li class="active"><a data-toggle="tab" href="#sub1">Subaba 1</a></li>
-                        <li><a data-toggle="tab" href="#sub2">Subaba 2</a></li>
+                        <li class="active"><a data-toggle="tab" href="#identificacao"><strong>Identificação</strong></a></li>
+                        <li><a data-toggle="tab" href="#vinculos2"><strong>Vínculos</strong></a></li>
+                        <li><a data-toggle="tab" href="#contribuicoes2"><strong>Contribuições</strong></a></li>
+                        <li><a data-toggle="tab" href="#declaracaoes2"><strong>Declarações</strong></a></li>
+                        <li><a data-toggle="tab" href="#outros2"><strong>Rural</strong></a></li>
+                        <li><a data-toggle="tab" href="#edicao2"><strong>Edição</strong></a></li>
+                        <li><a data-toggle="tab" href="#previa2"><strong>Visualização</strong></a></li>
                     </ul>
-                    
-                    <div class="tab-content">
-                        <div id="sub1" class="tab-pane fade in active">
-                            <h4>Subaba 1</h4>
-                            <p>Conteúdo da primeira subaba.</p>
-                        </div>
-                        <div id="sub2" class="tab-pane fade">
-                            <h4>Subaba 2</h4>
-                            <p>Conteúdo da segunda subaba.</p>
+                    <!--
+<div id="vinculos" class="tab-pane fade in">
+                        <div class="panel panel-default" style="max-width:820px">
+                            <div class="panel-heading">
+                                <div class="text-center">
+                                    <div style="font-size:large">
+                                        <toggle ng-model="itensExigencia.chkVinculo" ng-change="montarExigencia()" on="<strong>Incluir</strong>" off="<strong>Não Incluir</strong>" on-class="btn-primary"></toggle>
+                                        <label><strong>Vínculo(s) Empregatício(s)</strong></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div ng-show="itensVinculo.chkVinculo">
+                                    <div class="form-group">
+                                        <div class="radio-group">
+                                            <div class="radio">
+                                                <label><strong><input type="radio" ng-model="itensVinculo.txtVinculoConsiderado" ng-change="montarDespacho()" value="Não há">Nunca exerceu atividade como Empregado(a)</strong></label>
+                                            </div>        
+                                            <div class="radio">
+                                                <label><strong><input type="radio" ng-model="itensVinculo.txtVinculoConsiderado" ng-change="montarDespacho()" value="Apenas_CNIS">Considerados apenas vínculos do CNIS</strong></label>
+                                            </div>
+                                            <div class="radio">
+                                                <label><strong><input type="radio" ng-model="itensVinculo.txtVinculoConsiderado" ng-change="montarDespacho()" value="CNIS_CTPS">Considerados todos os vínculos constantes na(s) CTPS e do CNIS</strong></label>
+                                            
+                                            </div>
+                                            <div class="radio">
+                                                <label><strong><input type="radio" ng-model="itensVinculo.txtVinculoConsiderado" ng-change="montarDespacho()" value="CNIS">Considerados apenas vínculos do CNIS, não apresentou CTPS / Outros documentos</strong></label>                                        
+                                            </div>                                        
+                                            <div class="radio">
+                                                <label><strong><input type="radio" ng-model="itensVinculo.txtVinculoConsiderado" ng-change="montarDespacho()" value="Documento e CNIS">Considerados vínculos constantes na CTPS / Outros documentos, e no CNIS</strong></label>
+                                        
+                                                <div ng-show="itensVinculo.txtVinculoConsiderado === 'Documento e CNIS'">
+                                                    <label><b>Documento(s) Considerado(s):</b></label>
+                                                    <div class="container">
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocCTPS" ng-change="montarDespacho()">Carteira Profissional - CP ou Carteira de Trabalho - CTPS</label>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocFRE" ng-change="montarDespacho()">Declaração do Empregador + Ficha ou Livro de Registro de Empregados</label>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocContrato" ng-change="montarDespacho()">Contrato Individual de Trabalho</label>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocAcordo" ng-change="montarDespacho()">Acordo Coletivo de Trabalho</label>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocRescisao" ng-change="montarDespacho()">Termo de Rescisão do Contrato de Trabalho</label>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocFGTS" ng-change="montarDespacho()">Extrato Analítico de FGTS</label>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocRecibos" ng-change="montarDespacho()">Recibos de Pagamento</label>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocPonto" ng-change="montarDespacho()">Declaração do Empregador + Cartão/Livro/Folha de Ponto</label>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocCTC" ng-change="montarDespacho()">CTC - Certidão de Tempo de Contribuição</label>
+                                                        </div>
+                                                        <div style="margin-left:20px" class="input-group" ng-show="itensVinculo.chkDocCTC">
+                                                            <span class="input-group-addon">Órgão</span>
+                                                            <input type="text" class="form-control" ng-model="itensVinculo.txtDocCTC" ng-blur="montarDespacho()" style="max-width:640px">
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocDTC" ng-change="montarDespacho()">DTC - Declaração de Tempo de Contribuição</label>
+                                                        </div>
+                                                        <div style="margin-left:20px" class="input-group" ng-show="itensVinculo.chkDocDTC">
+                                                            <span class="input-group-addon">Nº DTC</span>
+                                                            <input type="text" class="form-control" ng-model="itensVinculo.txtDocDTC" ng-blur="montarDespacho()" style="max-width:640px">
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocATC" ng-change="montarDespacho()">ATC - Averbação de Tempo de Contribuição</label>
+                                                        </div>
+                                                        <div style="margin-left:20px" class="input-group" ng-show="itensVinculo.chkDocATC">
+                                                            <span class="input-group-addon">Nº ATC</span>
+                                                            <input type="text" class="form-control" ng-model="itensVinculo.txtDocATC" ng-blur="montarDespacho()" style="max-width:640px">
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" value="" ng-model="itensVinculo.chkDocOutro" ng-change="montarDespacho()">Outro(s) Documento(s)</label>
+                                                        </div>
+                                                        <div style="margin-left:20px" class="input-group" ng-show="itensVinculo.chkDocOutro">
+                                                            <span class="input-group-addon">Documento(s)</span>
+                                                            <input type="text" class="form-control" ng-model="itensVinculo.txtOutroDocumento" ng-blur="montarDespacho()" style="max-width:640px">
+                                                        </div>
+                                            </div>
+    
+    
+                                                  
+    
+    
+                                                </div>
+                                            </div>
+                                            <div class="radio">
+                                            <label><strong><input type="radio" ng-model="itensVinculo.txtVinculoConsiderado" ng-change="montarDespacho()" value="Documento Parcial e CNIS">Apresentou CTPS / Outros documentos, mas houve vínculo(s) não considerado(s)</strong></label>
+                                            <div ng-show="itensVinculo.txtVinculoConsiderado === 'Documento Parcial e CNIS'">
+                                                <label><b>Motivo(s):</b></label>
+                                                <div class="container">
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" ng-model="itensVinculo.chkExtempCTPS" ng-change="montarDespacho()">Registro extemporâneo na CTPS ou outro documento</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" ng-model="itensVinculo.chkExtempCNIS" ng-change="montarDespacho()">Registro extemporâneo no CNIS</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" ng-model="itensVinculo.chkVicioDoc" ng-change="montarDespacho()">Documento apresentado não permite confirmação</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" ng-model="itensVinculo.chkAbaixoMinimo" ng-change="montarDespacho()">Remuneração inferior ao mínimo</label>
+                                                    </div>
+                                                    <div class="checkbox" ng-show="especieSelecionada.descricao == 'Certidão de Tempo de Contribuição'">
+                                                        <label><input type="checkbox" value="" ng-model="itensVinculo.chkConcomitanciaDebito" ng-change="montarDespacho()">Há vínculo concomitante com período(s) de débito</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+    
+                                        
+    
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    -->
+                    
                     </div>
 
                    <!--  
