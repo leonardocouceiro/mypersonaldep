@@ -17,8 +17,8 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         { codigo: 'CTC', descricao: 'Certidão de Tempo de Contribuição' },
         { codigo: '46', descricao: 'Aposentadoria Especial' },
         { codigo: '57', descricao: 'Aposentadoria Especial do Professor' },
-        { codigo: '41', descricao: 'Aposentadoria por Idade Urbana LC 142 a fazer' },
-        { codigo: '42', descricao: 'Aposentadoria por Tempo de Contribuição LC142 a fazer' },
+        { codigo: '41', descricao: 'Aposentadoria por Idade Urbana da Pessoa com Deficiência'},
+        { codigo: '42', descricao: 'Aposentadoria por Tempo de Contribuição LC142' },
  /*     { codigo: '41', descricao: 'Aposentadoria por Idade Rural' },
         { codigo: '21', descricao: 'Pensão por Morte Urbana' },
         { codigo: '21', descricao: 'Pensão por Morte Rural' },
@@ -53,6 +53,8 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         chkComprRestabUniao: false,
         chkComprRural: false,
         chkFaltaCarencia: false,
+        chkNaoReqMinB42LC142: false,
+        chkNaoReqMinB41LC142: false,
         chkNaoDeficienteLC142: false,
         chkNaoReqMinimosLC142: false,
         chkFaltaCarenciaAposPQS: false,
@@ -439,11 +441,17 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
                     case 'Aposentadoria por Idade Urbana':
                         motivoDespacho = $scope.despachoApIdUrbInd();
                         break;
+                    case 'Aposentadoria por Idade Urbana da Pessoa com Deficiência':
+                        motivoDespacho = $scope.despachoApIdUrbLC142Ind();
+                        break;    
                     case 'Aposentadoria por Idade Rural':
                         motivoDespacho = $scope.despachoApIdRurInd();
                         break;
                     case 'Aposentadoria por Tempo de Contribuição':
                         motivoDespacho = $scope.despachoApTempInd();
+                        break;
+                    case 'Aposentadoria por Tempo de Contribuição LC142':
+                        motivoDespacho = $scope.despachoApTempLC142Ind();
                         break;
                     case 'Aposentadoria Especial':
                         motivoDespacho = $scope.despachoApEspInd();
@@ -507,6 +515,9 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
                     case 'Aposentadoria por Idade Urbana':
                         motivoDespacho = $scope.despachoApIdUrbConc();
                         break;
+                    case 'Aposentadoria por Idade Urbana LC142':
+                        motivoDespacho = $scope.despachoApIdUrbConc();
+                    break;
                     case 'Aposentadoria por Idade Rural':
                         $scope.itensMotivoDespacho.chkMotivoConc4 = false;
                         motivoDespacho = $scope.despachoApIdRurConc();
@@ -2125,6 +2136,58 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
 
         return motivosIndeferimento;
     };
+
+    //Indeferimento > Aposentadoria por Idade Urbana LC142 
+    $scope.despachoApIdUrbLC142Ind = function () {
+        let listaMotivos = [];
+
+        if ($scope.itensMotivoDespacho.chkNaoNovasRegrasEC103) {
+            $scope.itensMotivoDespacho.chkFaltaCarencia = false;
+            $scope.itensMotivoDespacho.chkFaltaIdade = false;
+            $scope.itensMotivoDespacho.chkNaoDeficienteLC142 = false;
+            $scope.itensMotivoDespacho.chkNaoReqMinimosLC142 = false;
+            listaMotivos.push("do(a) Requerente não completar os requisitos para a Aposentadoria Programada introduzidos pela Emenda Constitucional nº 103/2019 (Idade: 62 anos (mulher) / 65 anos (homem), Tempo de Contribuição: 15 anos (mulher) / 20 anos (homem), Carência: 180 contribuições), nos termos do art. 51 do Decreto nº 3.048/99; não se enquadrar na Regra de Transição descrita no art. 18 da mesma Emenda Constitucional nº 103/2019; e não possuir direito adquirido ao benefício na sua regra anterior, descrita no inc. I, art. 188-A do Decreto nº 3.048/99");
+        };
+        if ($scope.itensMotivoDespacho.chkFaltaCarencia) {
+            listaMotivos.push("LC142" + $scope.itensMotivoDespacho.txtCarencia + " contribuições, não atingindo as 180 exigidas, conforme o inciso II do art. 29 do Decreto nº 3.048/99, o que impossibilita a concessão");
+        };
+        if ($scope.itensMotivoDespacho.chkFaltaIdade) {
+            listaMotivos.push("do(a) Requerente não ter completado a idade mínima exigida para a sua concessão, nos termos do art. 51 do Decreto nº 3.048/99");
+        };
+        if ($scope.itensMotivoDespacho.chkNaoDeficienteLC142) {
+            $scope.itensMotivoDespacho.chkNaoReqMinimosLC142 = false;
+            listaMotivos.push("do(a) Requerente não comprovar a condição de Pessoa com Deficiência em avaliação médica e funcional, para fins da LC nº 142/2013, nos termos do art. 70-A do Decreto nº 3.048/99");
+        };
+        if ($scope.itensMotivoDespacho.chkNaoReqMinimosLC142) {
+            $scope.itensMotivoDespacho.chkNaoDeficienteLC142 = false;
+            listaMotivos.push("do(a) Requerente não cumprir os requisitos mínimos necessários para a Aposentadoria por Idade da Pessoa com Deficiência, para fins da LC nº 142/2013 (Idade: 55 anos (mulher) / 60 anos (homem), Carência: 180 contribuições), nos termos do art. 70-C do Decreto nº 3.048/99");
+        };
+        if ($scope.itensMotivoDespacho.chkOutroBeneficio) {
+            listaMotivos.push("do(a) Requerente ser titular de benefício incompatível na Data de Entrada do Requerimento (DER), sob E/NB " + $scope.itensMotivoDespacho.txtOutroBeneficio + ", nos termos do art. 167 do Decreto nº 3.048/99");
+        };
+
+
+        let qtdMotivos = listaMotivos.length;
+        let motivosIndeferimento = " em razão ";
+
+        for (i = 0; i < qtdMotivos; i++) {
+            if (i > 0) {
+                if (i == qtdMotivos - 1) {
+                    motivosIndeferimento += "; e ";
+                } else {
+                    motivosIndeferimento += "; ";
+                };
+            };
+
+            motivosIndeferimento += listaMotivos[i];
+        };
+
+        motivosIndeferimento += ".";
+
+        return motivosIndeferimento;
+    };
+
+
     //Indeferimento > Aposentadoria por Idade Rural
     $scope.despachoApIdRurInd = function () {
         $scope.itensMotivoDespacho.chkNaoNovasRegrasEC103 = false;

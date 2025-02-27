@@ -436,6 +436,39 @@
                                                     <input type="text" class="form-control" ng-model="itensMotivoDespacho.txtOutroBeneficio" ng-blur="montarDespacho()" maxlength="20" style="width:170px" placeholder="NB em Manutenção">
                                                 </div>
                                             </div>
+                                            <!-- Motivos Indeferimento Aposentadoria por Idade Urbana da Pessoa com Deficiência -->
+                                            <div ng-show="especieSelecionada.descricao == 'Aposentadoria por Idade Urbana da Pessoa com Deficiência'">
+                                                <div ng-show="especieSelecionada.descricao == 'Aposentadoria por Idade Urbana da Pessoa com Deficiência'">
+                                                    <strong>Nova Previdência (EC nº 103/2019):</strong>
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" ng-model="itensMotivoDespacho.chkNaoNovasRegrasEC103" ng-change="montarDespacho()"><strong>Não tem direito pelas novas regras, não se enquadra na regra de transição, não tem direito adquirido na regra anterior</strong></label>
+                                                    </div>
+                                                    <hr />
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" ng-disabled="itensMotivoDespacho.chkNaoNovasRegrasEC103" ng-model="itensMotivoDespacho.chkFaltaCarencia" ng-change="montarDespacho()"><strong>Falta de Carência</strong></label>
+                                                </div>
+                                                <div style="margin-left:20px" ng-show="itensMotivoDespacho.chkFaltaCarencia">
+                                                    <input type="text" class="form-control" id="qtdcarencia" ng-model="itensMotivoDespacho.txtCarencia" ng-blur="montarDespacho()" maxlength="3" style="width:150px" placeholder="Carência completa" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" ng-disabled="itensMotivoDespacho.chkNaoNovasRegrasEC103" ng-model="itensMotivoDespacho.chkFaltaIdade" ng-change="montarDespacho()"><strong>Falta de Idade</strong></label>
+                                                </div>
+                                                <div class="checkbox" ng-show="especieSelecionada.descricao == 'Aposentadoria por Idade Urbana da Pessoa com Deficiência'">
+                                                    <label><input type="checkbox" value="" ng-disabled="itensMotivoDespacho.chkNaoNovasRegrasEC103 || itensMotivoDespacho.chkNaoReqMinimosLC142" ng-model="itensMotivoDespacho.chkNaoDeficienteLC142" ng-change="montarDespacho()"><strong>Não comprovação da condição de Deficiente (LC nº 142/13)</strong></label>
+                                                </div>
+                                                <div class="checkbox" ng-show="especieSelecionada.descricao == 'Aposentadoria por Idade Urbana da Pessoa com Deficiência'">
+                                                    <label><input type="checkbox" value="" ng-disabled="itensMotivoDespacho.chkNaoNovasRegrasEC103 || itensMotivoDespacho.chkNaoDeficienteLC142" ng-model="itensMotivoDespacho.chkNaoReqMinimosLC142" ng-change="montarDespacho()"><strong>Não completa os requisitos mínimos (LC nº 142/13)</strong></label>
+                                                </div>
+                                              
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="" ng-model="itensMotivoDespacho.chkOutroBeneficio" ng-change="montarDespacho()"><strong>Recebimento de Outro Benefício</strong></label>
+                                                </div>
+                                                <div style="margin-left:20px" class="input-group" ng-show="itensMotivoDespacho.chkOutroBeneficio">
+                                                    <span class="input-group-addon">E/NB</span>
+                                                    <input type="text" class="form-control" ng-model="itensMotivoDespacho.txtOutroBeneficio" ng-blur="montarDespacho()" maxlength="20" style="width:170px" placeholder="NB em Manutenção">
+                                                </div>
+                                            </div>
                                             <!-- Motivos Indeferimento Aposentadoria por Tempo de Contribuição -->
                                             <div ng-show="especieSelecionada.descricao == 'Aposentadoria por Tempo de Contribuição'">
                                                 <strong>Nova Previdência (EC nº 103/2019):</strong>
