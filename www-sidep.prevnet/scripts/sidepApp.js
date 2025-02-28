@@ -1,7 +1,20 @@
 var app = angular.module('spApp', ['angularTrix', 'ngCookies', 'ui.bootstrap', 'ui.toggle', 'ngSanitize']);
 
 //Controller Principal
-app.controller('spCtrl', function ($scope, $filter, $cookies) {
+app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
+
+    $scope.itensMotivoDespacho = {
+        txtDataDER: ''
+    };
+
+    // Função para aplicar a máscara no campo de data
+    $scope.applyMask = function() {
+        $timeout(function() {
+            // Aplica a máscara ao campo de data após o Angular renderizar o DOM
+            $('#der').inputmask('99/99/9999');
+        }, 0);  // Atraso de 0 ms para garantir que o DOM esteja pronto
+    };
+
     //Seção do Usuário
     $scope.nomeUsuario = "";
     $scope.cargoUsuario = "";
@@ -305,8 +318,10 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
     };
 
     $scope.carregarInicio = function () {
+        $scope.applyMask();  // Aplica a máscara
         $scope.buscarDadosUsuario();
         $scope.montarDespacho();
+
     };
 
     $scope.buscarDadosUsuario = function () {
@@ -2108,7 +2123,7 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
             listaMotivos.push("do(a) Requerente não atingir a Carência exigida, tendo completado apenas " + $scope.itensMotivoDespacho.txtCarencia + " contribuições, não atingindo as 180 exigidas, conforme o inciso II do art. 29 do Decreto nº 3.048/99, o que impossibilita a concessão");
         };
         if ($scope.itensMotivoDespacho.chkFaltaIdade) {
-            listaMotivos.push("do(a) Requerente não ter completado a idade mínima exigida para a sua concessão, nos termos do art. 51 do Decreto nº 3.048/99");
+            listaMotivos.push("de falta de idade mínima. A idade mínima exigida para a aposentadoria por idade é de 62 anos para mulheres e 65 anos para homens. No entanto, na data do requerimento ("+ $scope.itensMotivoDespacho.txtDataDER +"), o(a) requerente possuía apenas "+ $scope.itensMotivoDespacho.txtIdadeAnos +" anos, "+ $scope.itensMotivoDespacho.txtIdadeMeses +" meses e "+ $scope.itensMotivoDespacho.txtIdadeDias +" dias, não atendendo ao requisito etário necessário para a concessão do benefício");
         };
         if ($scope.itensMotivoDespacho.chkNaoDeficienteLC142) {
             $scope.itensMotivoDespacho.chkNaoReqMinimosLC142 = false;
@@ -2198,10 +2213,10 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         let listaMotivos = [];
         
         if ($scope.itensMotivoDespacho.chkFaltaCarencia) {
-            listaMotivos.push("do(a) Requerente não atingir a Carência exigida, tendo completado apenas " + $scope.itensMotivoDespacho.txtCarencia + " meses de Atividade Rural, número inferior ao exigido no inc. II, art. 29 do Decreto nº 3.048/99");
+            listaMotivos.push("do(a) Requerente não atingir a carência exigida, tendo completado apenas " + $scope.itensMotivoDespacho.txtCarencia + " meses de Atividade Rural, número inferior ao exigido no inc. II, art. 29 do Decreto nº 3.048/99");
         };
         if ($scope.itensMotivoDespacho.chkFaltaIdade) {
-            listaMotivos.push("do(a) Requerente não ter completado a idade mínima exigida para a sua concessão, nos termos do caput do art. 56 do Decreto nº 3.048/99");
+            listaMotivos.push("de falta de idade mínima. A idade mínima exigida para a aposentadoria por idade é de 55 anos para mulheres e 60 anos para homens. No entanto, na data do requerimento ("+ $scope.itensMotivoDespacho.txtDER +"), o(a) requerente possuía apenas "+ $scope.itensMotivoDespacho.txtIdadeAnos +" anos, "+ $scope.itensMotivoDespacho.txtIdadeMeses +" meses e "+ $scope.itensMotivoDespacho.txtIdadeDias +" dias, não atendendo ao requisito etário necessário para a concessão do benefício.");
         };
         if ($scope.itensMotivoDespacho.chkQualSeg) {
             listaMotivos.push("do(a) Requerente não comprovar o efetivo exercício de atividade Rural no período imediatamente anterior à Data de Entrada do Requerimento (DER) ou ao mês em que completou o requisito etário, mantendo tal condição somente até " + $scope.itensMotivoDespacho.txtDataQualSeg + ", nos termos do §1º, art. 56 do Decreto nº 3.048/99");
@@ -4121,4 +4136,6 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
 
           /* alert("Texto copiado com sucesso!"); */
     };
+
+
 });

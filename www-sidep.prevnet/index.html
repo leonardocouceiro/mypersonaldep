@@ -55,7 +55,7 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'UA-157566795-1');
+        gtag('config', 'UA-157566795-1');    
     </script>
 
 
@@ -175,6 +175,25 @@
                             <label for="req">Interessado:</label>
                             <div style="clear: both;"></div>
                             <input type="text" class="form-control text-uppercase" ng-model="nomeInteressado" style="font-weight:bold" id="req" placeholder="Nome do Interessado" size="47" maxlength="70" />
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': !itensMotivoDespacho.txtDataDER}">
+                            <label for="der">DER:</label>
+                            <div style="clear: both;"></div>
+                            <input type="text" 
+                                   class="form-control text-uppercase" 
+                                   ng-model="itensMotivoDespacho.txtDataDER" 
+                                   style="font-weight:bold" 
+                                   id="der" 
+                                   placeholder="DD/MM/YYYY" 
+                                   size="10" 
+                                   maxlength="10"
+                                   ng-init="applyMask()"/>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': OlDoBeneficio == ''}">
+                            <label for="req">OL:</label>
+                            <div style="clear: both;"></div>
+                            <input type="text" class="form-control text-uppercase" ng-model="OlDoBeneficio" style="font-weight:bold" id="ol" placeholder="OL" size="10" maxlength="10" />
                         </div>
                     </form>
                     <br/>
@@ -416,6 +435,15 @@
                                                 <div class="checkbox">
                                                     <label><input type="checkbox" value="" ng-disabled="itensMotivoDespacho.chkNaoNovasRegrasEC103" ng-model="itensMotivoDespacho.chkFaltaIdade" ng-change="montarDespacho()"><strong>Falta de Idade</strong></label>
                                                 </div>
+                                                <div style="margin-left:20px" class="input-group" ng-show="itensMotivoDespacho.chkFaltaIdade">
+                                                    <span class="input-group-addon">Idade do(a) Req. até a DER</span>
+                                                    <input type="text" class="form-control" ng-model="itensMotivoDespacho.txtIdadeAnos" ng-blur="montarDespacho()" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                                                    <span class="input-group-addon">Anos</span>
+                                                    <input type="text" class="form-control" ng-model="itensMotivoDespacho.txtIdadeMeses" ng-blur="montarDespacho()" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                                                    <span class="input-group-addon">Meses</span>
+                                                    <input type="text" class="form-control" ng-model="itensMotivoDespacho.txtIdadeDias" ng-blur="montarDespacho()" maxlength="2" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                                                    <span class="input-group-addon">Dias</span>
+                                                </div>
                                                 <div class="checkbox" ng-show="especieSelecionada.descricao == 'Aposentadoria por Idade Urbana'">
                                                     <label><input type="checkbox" value="" ng-disabled="itensMotivoDespacho.chkNaoNovasRegrasEC103 || itensMotivoDespacho.chkNaoReqMinimosLC142" ng-model="itensMotivoDespacho.chkNaoDeficienteLC142" ng-change="montarDespacho()"><strong>Não comprovação da condição de Deficiente (LC nº 142/13)</strong></label>
                                                 </div>
@@ -451,10 +479,10 @@
                                                             <label><input  type="radio" value="SemTempoMinDef" ng-model="itensMotivoDespacho.despachoApIdUrbLC142Ind" ng-change="montarDespacho()"><strong>Não comprova no mínimo 15 anos trabalhados como Deficiente</strong></label>
                                                         </div>  
                                                         <div class="radio">
-                                                            <label><input  type="radio" value="NaoReqMinimoTempoB41LC142"  ng-model="itensMotivoDespacho.despachoApIdUrbLC142Ind" ng-change="montarDespacho()"><strong>Não completa o requisito mínimos de 15 anos de contribuição(LC nº 142/13)</strong></label>
+                                                            <label><input  type="radio" value="NaoReqMinimoTempoB41LC142"  ng-model="itensMotivoDespacho.despachoApIdUrbLC142Ind" ng-change="montarDespacho()"><strong>Não completa o requisito mínimo de 15 anos de contribuição(LC nº 142/13)</strong></label>
                                                         </div>
                                                         <div class="radio">
-                                                            <label><input  type="radio" value="NaoReqMinimoIdadeB41LC142"  ng-model="itensMotivoDespacho.despachoApIdUrbLC142Ind" ng-change="montarDespacho()"><strong>Não completa o requisito mínimo de idadde, 60 para homem e 55 para mulher (LC nº 142/13)</strong></label>
+                                                            <label><input  type="radio" value="NaoReqMinimoIdadeB41LC142"  ng-model="itensMotivoDespacho.despachoApIdUrbLC142Ind" ng-change="montarDespacho()"><strong>Não completa o requisito mínimo de idade, 60 para homens e 55 para mulheres (LC nº 142/13)</strong></label>
                                                         </div>    
                                                         <div class="radio">
                                                             <label><input  type="radio" value="NaoReqMinimosLC142"  ng-model="itensMotivoDespacho.despachoApIdUrbLC142Ind" ng-change="montarDespacho()"><strong>Não completa os requisitos mínimos de idade e tempo (LC nº 142/13)</strong></label>
@@ -1992,12 +2020,30 @@
                                             <p><b>INSTITUTO NACIONAL DO SEGURO SOCIAL</b></p>
                                             <p><b>Central de Analise - Gex Vale - SR I, em {{dataDespacho}}</b></p> <!-- <p class="text-right">{{orgaoUsuario}}, em {{dataDespacho}}</p>  -->
                                         </div>
-                                        <div style="margin-left:100px">
-                                            <p style="margin:0px"><i><b>{{especieExibicao}}: </b></i>{{especieSelecionada.codigo === "CTC" ? null : especieSelecionada.codigo + "/"}}{{numeroBeneficio}}<br />
-                                            <p style="margin:0px"><i><b>Int: </b></i><span class="text-uppercase">{{nomeInteressado}}</span><br />
+                                        <div style="margin-left:100px"> 
+                                            <p style="margin:0px">
+                                                <i><b>{{especieExibicao}}: </b></i>
+                                                {{especieSelecionada.codigo === "CTC" ? null : especieSelecionada.codigo + "/"}}{{numeroBeneficio}} - Ol {{OlDoBeneficio}}
+                                                <span ng-show="especieSelecionada.descricao == 'Aposentadoria por Idade Urbana da Pessoa com Deficiência' || especieSelecionada.descricao == 'Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência'">/ LC142</span>
+                                                <br />
+                                            </p>
+                                            <p style="margin:0px"><i><b>Int: </b></i><span class="text-uppercase">{{nomeInteressado}}</span><br /></p>
                                             <p><i><b>Assunto: </b></i>{{tipoDespacho}} do Requerimento</p><br />
                                         </div>
+                                    <!--
+                                        
+                                    <div ng-show="especieSelecionada.descricao == 'Aposentadoria por Idade Urbana da Pessoa com Deficiência' || 'Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência'">
+                                            <div style="margin-left:100px">
+                                                <p style="margin:0px"><i><b>{{especieExibicao}}: </b></i>{{especieSelecionada.codigo === "CTC" ? null : especieSelecionada.codigo + "/"}}{{numeroBeneficio}} - Ol {{OlDoBeneficio}} / LC142<br />
+                                                <p style="margin:0px"><i><b>Int: </b></i><span class="text-uppercase">{{nomeInteressado}}</span><br />
+                                                <p><i><b>Assunto: </b></i>{{tipoDespacho}} do Requerimento</p><br />
+                                            </div>
+                                    </div>
                                     
+                                    
+                                    
+                                    -->    
+                                                                
                                         <div ng-bind-html="conteudoEditor"></div>
                                         
             
