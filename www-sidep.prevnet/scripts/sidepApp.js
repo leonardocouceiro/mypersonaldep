@@ -4,17 +4,39 @@ var app = angular.module('spApp', ['angularTrix', 'ngCookies', 'ui.bootstrap', '
 app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
 
     $scope.itensMotivoDespacho = {
-        txtDataDER: ''
+        txtDataDER: '',
+        OlDoBeneficio: ''
     };
 
     // Função para aplicar a máscara no campo de data
-    $scope.applyMask = function() {
-        $timeout(function() {
-            // Aplica a máscara ao campo de data após o Angular renderizar o DOM
-            $('#der').inputmask('99/99/9999');
-        }, 0);  // Atraso de 0 ms para garantir que o DOM esteja pronto
-    };
+    $scope.applyDateMask = function() {
+        $('#der').on('input', function() {
+            var valor = $(this).val();
+            valor = valor.replace(/[^0-9]/g, ''); // Remove qualquer caractere não numérico
+            if (valor.length > 2 && valor.length <= 4) {
+                valor = valor.substring(0, 2) + '/' + valor.substring(2);
+            } else if (valor.length > 4) {
+                valor = valor.substring(0, 2) + '/' + valor.substring(2, 4) + '/' + valor.substring(4, 8);
+            }
+            $(this).val(valor); // Atualiza o valor no input
+    });}
 
+    // Função para aplicar a máscara no Ol
+    $scope.applyOlMask = function() {
+        $('#ol').on('input', function() {
+            var valor = $(this).val();
+            valor = valor.replace(/[^0-9]/g, ''); // Remove qualquer caractere não numérico
+    
+            // Adiciona a máscara no formato 00.000.000
+            if (valor.length > 2 && valor.length <= 5) {
+                valor = valor.substring(0, 2) + '.' + valor.substring(2);
+            } else if (valor.length > 5) {
+                valor = valor.substring(0, 2) + '.' + valor.substring(2, 5) + '.' + valor.substring(5, 8);
+            }
+    
+            $(this).val(valor); // Atualiza o valor no input
+    });}
+ 
     //Seção do Usuário
     $scope.nomeUsuario = "";
     $scope.cargoUsuario = "";
@@ -318,7 +340,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
     };
 
     $scope.carregarInicio = function () {
-        $scope.applyMask();  // Aplica a máscara
+ 
         $scope.buscarDadosUsuario();
         $scope.montarDespacho();
 
