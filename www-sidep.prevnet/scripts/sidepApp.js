@@ -453,6 +453,9 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
                     case 'Aposentadoria por Tempo de Contribuição':
                         motivoDespacho = $scope.despachoApTempInd();
                         break;
+                    case 'Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência':
+                        motivoDespacho = $scope.despachoApTempLC142Ind();
+                        break; 
                     case 'Aposentadoria por Tempo de Contribuição LC142':
                         motivoDespacho = $scope.despachoApTempLC142Ind();
                         break;
@@ -2141,8 +2144,6 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
     };
 
     //Indeferimento > Aposentadoria por Idade Urbana LC142 
-
-   
    
     $scope.despachoApIdUrbLC142Ind = function () {
         let listaMotivos = [];
@@ -2191,7 +2192,6 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         return motivosIndeferimento;
     };
 
-
     //Indeferimento > Aposentadoria por Idade Rural
     $scope.despachoApIdRurInd = function () {
         $scope.itensMotivoDespacho.chkNaoNovasRegrasEC103 = false;
@@ -2228,6 +2228,7 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         motivosIndeferimento += ".";
         return motivosIndeferimento;
     };
+
     //Indeferimento > Aposentadoria por Tempo de Contribuição
     $scope.despachoApTempInd =  function () {
         let listaMotivos = [];
@@ -2311,6 +2312,50 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         motivosIndeferimento += ".";
         return motivosIndeferimento;
     };
+
+   //Indeferimento > Aposentadoria por Tempo de Contribuição LC142
+   
+   $scope.despachoApTempLC142Ind = function () {
+    let listaMotivos = [];
+            switch ($scope.itensMotivoDespacho.despachoApTempLC142Ind) {
+            case 'NaoDeficienteLC142':
+                listaMotivos.push("do(a) Requerente não comprovar a condição de Pessoa com Deficiência em avaliação médico-pericial e social, para fins da LC nº 142/2013, nos termos do art. 70-A do Decreto nº 3.048/99");
+                break;
+            case 'NaoCompareceuNaoDeficienteLC142':
+                    listaMotivos.push("do(a) Requerente não comprovar a condição de Pessoa com Deficiência em avaliação médico-pericial e social, para fins da LC nº 142/2013, nos termos do art. 70-A do Decreto nº 3.048/99, uma vez que o(a) requerente não compareceu nas datas agendadas para realização da perícia médica e ou avaliação social");
+                    break;
+            case 'NaoReqMinimoTempoB42LC142':
+                listaMotivos.push("do(a) Requerente não cumprir o tempo mínimo de contribuição exigido, sendo 25 (vinte e cinco) anos para homens e 20 (vinte) anos para mulheres, conforme os artigos 70-A e 70-B do Decreto nº 3.048/1999 e o artigo 314 da IN nº 128/2022, requisito necessário a ser cumprido antes da realização da perícia e avaliação social");
+                break;
+            case 'NaoReqMinimosB42LC142':
+                listaMotivos.push("da falta de tempo de contribuição e/ou da não comprovação da condição de segurado com deficiência junto à perícia médica e à avaliação social do INSS, nas condições mínimas exigidas no Artigo 3º da Lei Complementar nº 142/2013 e no Artigo 314 da Instrução Normativa nº 128/2022");
+                break;
+        }
+  
+        if ($scope.itensMotivoDespacho.chkOutroBeneficio) {
+            listaMotivos.push("do(a) Requerente ser titular de benefício incompatível na Data de Entrada do Requerimento (DER), sob E/NB " + $scope.itensMotivoDespacho.txtOutroBeneficio + ", nos termos do art. 167 do Decreto nº 3.048/99");
+        };
+
+    let qtdMotivos = listaMotivos.length;
+    let motivosIndeferimento = " em razão ";
+
+    for (i = 0; i < qtdMotivos; i++) {
+        if (i > 0) {
+            if (i == qtdMotivos - 1) {
+                motivosIndeferimento += "; e ";
+            } else {
+                motivosIndeferimento += "; ";
+            };
+        };
+
+        motivosIndeferimento += listaMotivos[i];
+    };
+
+    motivosIndeferimento += ".";
+
+    return motivosIndeferimento;
+};
+
     //Indeferimento > Aposentadoria Especial
     $scope.despachoApEspInd =  function () {
         let listaMotivos = [];
@@ -2370,6 +2415,7 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         motivosIndeferimento += ".";
         return motivosIndeferimento;
     };
+
     //Indeferimento > Aposentadoria Especial do Professor
     $scope.despachoApProfInd =  function () {
         let listaMotivos = [];
@@ -2429,6 +2475,7 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         motivosIndeferimento += ".";
         return motivosIndeferimento;
     };
+
     //Indeferimento > Salário-Maternidade Urbano
     $scope.despachoSalMatUrbInd = function () {
         let listaMotivos = [];
@@ -2492,6 +2539,7 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         motivosIndeferimento += ".";
         return motivosIndeferimento;
     };
+
     //Indeferimento > Salário-Maternidade Rural
     $scope.despachoSalMatRurInd = function () {
         let listaMotivos = [];

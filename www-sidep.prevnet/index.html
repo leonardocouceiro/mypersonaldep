@@ -528,6 +528,35 @@
                                                     <input type="text" class="form-control" ng-model="itensMotivoDespacho.txtOutroBeneficio" ng-blur="montarDespacho()" maxlength="20" style="width:170px" placeholder="NB em Manutenção">
                                                 </div>
                                             </div>
+                                            <!-- Motivos Indeferimento Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência -->
+                                            <div ng-show="especieSelecionada.descricao == 'Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência'">
+                                                   
+                                                <div class="form-group">
+                                                    <div class="radio-group">
+                                                        <div class="radio">
+                                                            <label><input  type="radio" value="NaoDeficienteLC142"  ng-model="itensMotivoDespacho.despachoApTempLC142Ind" ng-change="montarDespacho()"><strong>Não comprovação da condição de Deficiente (LC nº 142/13)</strong></label>
+                                                        </div>          
+                                                        <div class="radio">
+                                                            <label><input  type="radio" value="NaoCompareceuNaoDeficienteLC142"  ng-model="itensMotivoDespacho.despachoApTempLC142Ind" ng-change="montarDespacho()"><strong>Não comprovação da condição de Deficiente por Não Comparecimento aos Agendamentos(LC nº 142/13)</strong></label>
+                                                        </div>                                    
+                                                        <div class="radio">
+                                                            <label><input  type="radio" value="NaoReqMinimoTempoB42LC142"  ng-model="itensMotivoDespacho.despachoApTempLC142Ind" ng-change="montarDespacho()"><strong>Não completa o requisito mínimo de 20 M / 25 H anos de contribuição(LC nº 142/13)</strong></label>
+                                                        </div>  
+                                                        <div class="radio">
+                                                            <label><input  type="radio" value="NaoReqMinimosB42LC142"  ng-model="itensMotivoDespacho.despachoApTempLC142Ind" ng-change="montarDespacho()"><strong>Não completa os requisitos mínimos de tempo e ou grau de deficiência(LC nº 142/13)</strong></label>
+                                                        </div>  
+                                                    </div>                                                  
+                                                 </div>
+                                            
+
+                                                    <div class="checkbox">
+                                                        <label><input type="checkbox" value="" ng-model="itensMotivoDespacho.chkOutroBeneficio" ng-change="montarDespacho()"><strong>Recebimento de Outro Benefício</strong></label>
+                                                    </div>
+                                                    <div style="margin-left:20px" class="input-group" ng-show="itensMotivoDespacho.chkOutroBeneficio">
+                                                        <span class="input-group-addon">E/NB</span>
+                                                    <input type="text" class="form-control" ng-model="itensMotivoDespacho.txtOutroBeneficio" ng-blur="montarDespacho()" maxlength="20" style="width:170px" placeholder="NB em Manutenção">
+                                                    </div>                                                
+                                            </div>
                                             <!-- Motivos Indeferimento Aposentadoria Especial -->
                                             <div ng-show="especieSelecionada.descricao == 'Aposentadoria Especial'">
                                                 <strong>Nova Previdência (EC nº 103/2019):</strong>
