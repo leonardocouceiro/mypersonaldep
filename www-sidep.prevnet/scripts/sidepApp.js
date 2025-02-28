@@ -2148,23 +2148,28 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         let listaMotivos = [];
         switch ($scope.itensMotivoDespacho.despachoApIdUrbLC142Ind) {
         case 'NaoDeficienteLC142':
-            listaMotivos.push("do(a) Requerente não comprovar a condição de Pessoa com Deficiência em avaliação médica e funcional, para fins da LC nº 142/2013, nos termos do art. 70-A do Decreto nº 3.048/99");
+            listaMotivos.push("do(a) Requerente não comprovar a condição de Pessoa com Deficiência em avaliação médico-pericial e social, para fins da LC nº 142/2013, nos termos do art. 70-A do Decreto nº 3.048/99");
             break;
+        case 'NaoCompareceuNaoDeficienteLC142':
+                listaMotivos.push("do(a) Requerente não comprovar a condição de Pessoa com Deficiência em avaliação médico-pericial e social, para fins da LC nº 142/2013, nos termos do art. 70-A do Decreto nº 3.048/99, uma vez que o(a) requerente não compareceu nas datas agendadas para realização da perícia médica e ou avaliação social");
+                break;
         case 'SemTempoMinDef':
-            listaMotivos.push("do(a) Requerente não ter comprovado no mínimo 15 (quinze) anos de contribuição trabalhados na condição de pessoa com deficiência, conforme exigido no inciso IV, Art 3º da LC 142/2013 e Artigo 311 da IN 128/2022.");
+            listaMotivos.push("do(a) Requerente não ter comprovado no mínimo 15 (quinze) anos de contribuição trabalhados na condição de pessoa com deficiência, conforme exigido no inciso IV, Art 3º da LC 142/2013 e Artigo 311 da IN 128/2022");
             break;
-        case 'NaoReqMinimosTempoB41LC142':
-            listaMotivos.push("do(a) Requerente não comprovação de no mínimo 15(quinze) anos de contribuição exigidos conforme inciso IV, Art 3º da LC 142/2013 e Artigo 311 da IN 128/2022, requisito necessário a ser cumprido antes da realização da perícia e avaliação social.");
+        case 'NaoReqMinimoTempoB41LC142':
+            listaMotivos.push("do(a) Requerente não comprovação de no mínimo 15 (quinze) anos de contribuição exigidos conforme inciso IV, Art 3º da LC 142/2013 e Artigo 311 da IN 128/2022, requisito necessário a ser cumprido antes da realização da perícia e avaliação social");
             break;
         case 'NaoReqMinimoIdadeB41LC142':
-            listaMotivos.push("do(a) Requerente não ter completado a idade mínima exigida, sendo 60 (sessenta) anos de idade, se homem, e 55 (cinquenta e cinco) anos de idade, se mulher, conforme estabelecido no inciso IV, Art. 3º da LC 142/2013 e no Artigo 311 da IN 128/2022.");
-        break;
+            listaMotivos.push("do(a) Requerente não ter completado a idade mínima exigida, sendo 60 (sessenta) anos de idade, se homem, e 55 (cinquenta e cinco) anos de idade, se mulher, conforme estabelecido no inciso IV, Art. 3º da LC 142/2013 e no Artigo 311 da IN 128/2022, requisito necessário a ser cumprido antes da realização da perícia e avaliação social");
+            break;
         case 'NaoReqMinimosLC142':
-            listaMotivos.push("do(a) Requerente ser titular de benefício incompatível na Data de Entrada do Requerimento (DER), sob E/NB " + $scope.itensMotivoDespacho.txtOutroBeneficio + ", nos termos do art. 167 do Decreto nº 3.048/99");
-        break;
+            listaMotivos.push("do(a) Requerente não cumprir os requisitos mínimos necessários para a Aposentadoria por Idade da Pessoa com Deficiência, para fins da LC nº 142/2013 (Idade: 55 anos (mulher) / 60 anos (homem), Tempo de Contribuição: 15 anos), nos termos do art. 70-C do Decreto nº 3.048/99, requisitos necessários a serem cumpridos antes da realização da perícia e avaliação social");
+            break;
     }
       
-       
+    if ($scope.itensMotivoDespacho.chkOutroBeneficio) {
+        listaMotivos.push("do(a) Requerente ser titular de benefício incompatível na Data de Entrada do Requerimento (DER), sob E/NB " + $scope.itensMotivoDespacho.txtOutroBeneficio + ", nos termos do art. 167 do Decreto nº 3.048/99");
+    };
 
         let qtdMotivos = listaMotivos.length;
         let motivosIndeferimento = " em razão ";
