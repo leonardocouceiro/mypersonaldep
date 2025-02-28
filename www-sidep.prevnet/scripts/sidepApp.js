@@ -18,7 +18,7 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         { codigo: '46', descricao: 'Aposentadoria Especial' },
         { codigo: '57', descricao: 'Aposentadoria Especial do Professor' },
         { codigo: '41', descricao: 'Aposentadoria por Idade Urbana da Pessoa com Deficiência'},
-        { codigo: '42', descricao: 'Aposentadoria por Tempo de Contribuição LC142' },
+        { codigo: '42', descricao: 'Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência' },
  /*     { codigo: '41', descricao: 'Aposentadoria por Idade Rural' },
         { codigo: '21', descricao: 'Pensão por Morte Urbana' },
         { codigo: '21', descricao: 'Pensão por Morte Rural' },
@@ -53,10 +53,13 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
         chkComprRestabUniao: false,
         chkComprRural: false,
         chkFaltaCarencia: false,
+        chkSemTempoMinDef: false,
         chkNaoReqMinB42LC142: false,
         chkNaoReqMinB41LC142: false,
         chkNaoDeficienteLC142: false,
-        chkNaoReqMinimosLC142: false,
+        chkNaoReqMinimosTempoB41LC142: false,
+        chkNaoReqMinimosIdadeLC142: false,
+        chkNaoReqMinimosTempoB42LC142: false,
         chkFaltaCarenciaAposPQS: false,
         chkRendaSuperior: false,
         chkAmpliacaoRenda: false,
@@ -2138,34 +2141,30 @@ app.controller('spCtrl', function ($scope, $filter, $cookies) {
     };
 
     //Indeferimento > Aposentadoria por Idade Urbana LC142 
+
+   
+   
     $scope.despachoApIdUrbLC142Ind = function () {
         let listaMotivos = [];
-
-        if ($scope.itensMotivoDespacho.chkNaoNovasRegrasEC103) {
-            $scope.itensMotivoDespacho.chkFaltaCarencia = false;
-            $scope.itensMotivoDespacho.chkFaltaIdade = false;
-            $scope.itensMotivoDespacho.chkNaoDeficienteLC142 = false;
-            $scope.itensMotivoDespacho.chkNaoReqMinimosLC142 = false;
-            listaMotivos.push("do(a) Requerente não completar os requisitos para a Aposentadoria Programada introduzidos pela Emenda Constitucional nº 103/2019 (Idade: 62 anos (mulher) / 65 anos (homem), Tempo de Contribuição: 15 anos (mulher) / 20 anos (homem), Carência: 180 contribuições), nos termos do art. 51 do Decreto nº 3.048/99; não se enquadrar na Regra de Transição descrita no art. 18 da mesma Emenda Constitucional nº 103/2019; e não possuir direito adquirido ao benefício na sua regra anterior, descrita no inc. I, art. 188-A do Decreto nº 3.048/99");
-        };
-        if ($scope.itensMotivoDespacho.chkFaltaCarencia) {
-            listaMotivos.push("LC142" + $scope.itensMotivoDespacho.txtCarencia + " contribuições, não atingindo as 180 exigidas, conforme o inciso II do art. 29 do Decreto nº 3.048/99, o que impossibilita a concessão");
-        };
-        if ($scope.itensMotivoDespacho.chkFaltaIdade) {
-            listaMotivos.push("do(a) Requerente não ter completado a idade mínima exigida para a sua concessão, nos termos do art. 51 do Decreto nº 3.048/99");
-        };
-        if ($scope.itensMotivoDespacho.chkNaoDeficienteLC142) {
-            $scope.itensMotivoDespacho.chkNaoReqMinimosLC142 = false;
+        switch ($scope.itensMotivoDespacho.despachoApIdUrbLC142Ind) {
+        case 'NaoDeficienteLC142':
             listaMotivos.push("do(a) Requerente não comprovar a condição de Pessoa com Deficiência em avaliação médica e funcional, para fins da LC nº 142/2013, nos termos do art. 70-A do Decreto nº 3.048/99");
-        };
-        if ($scope.itensMotivoDespacho.chkNaoReqMinimosLC142) {
-            $scope.itensMotivoDespacho.chkNaoDeficienteLC142 = false;
-            listaMotivos.push("do(a) Requerente não cumprir os requisitos mínimos necessários para a Aposentadoria por Idade da Pessoa com Deficiência, para fins da LC nº 142/2013 (Idade: 55 anos (mulher) / 60 anos (homem), Carência: 180 contribuições), nos termos do art. 70-C do Decreto nº 3.048/99");
-        };
-        if ($scope.itensMotivoDespacho.chkOutroBeneficio) {
+            break;
+        case 'SemTempoMinDef':
+            listaMotivos.push("do(a) Requerente não ter comprovado no mínimo 15 (quinze) anos de contribuição trabalhados na condição de pessoa com deficiência, conforme exigido no inciso IV, Art 3º da LC 142/2013 e Artigo 311 da IN 128/2022.");
+            break;
+        case 'NaoReqMinimosTempoB41LC142':
+            listaMotivos.push("do(a) Requerente não comprovação de no mínimo 15(quinze) anos de contribuição exigidos conforme inciso IV, Art 3º da LC 142/2013 e Artigo 311 da IN 128/2022, requisito necessário a ser cumprido antes da realização da perícia e avaliação social.");
+            break;
+        case 'NaoReqMinimoIdadeB41LC142':
+            listaMotivos.push("do(a) Requerente não ter completado a idade mínima exigida, sendo 60 (sessenta) anos de idade, se homem, e 55 (cinquenta e cinco) anos de idade, se mulher, conforme estabelecido no inciso IV, Art. 3º da LC 142/2013 e no Artigo 311 da IN 128/2022.");
+        break;
+        case 'NaoReqMinimosLC142':
             listaMotivos.push("do(a) Requerente ser titular de benefício incompatível na Data de Entrada do Requerimento (DER), sob E/NB " + $scope.itensMotivoDespacho.txtOutroBeneficio + ", nos termos do art. 167 do Decreto nº 3.048/99");
-        };
-
+        break;
+    }
+      
+       
 
         let qtdMotivos = listaMotivos.length;
         let motivosIndeferimento = " em razão ";
