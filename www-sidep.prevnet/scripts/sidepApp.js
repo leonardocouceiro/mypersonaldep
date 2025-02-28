@@ -49,11 +49,11 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
     $scope.especies = [
         { codigo: '41', descricao: 'Aposentadoria por Idade Urbana' },
         { codigo: '42', descricao: 'Aposentadoria por Tempo de Contribuição' },
+        { codigo: '42', descricao: 'Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência' },
         { codigo: 'CTC', descricao: 'Certidão de Tempo de Contribuição' },
+        { codigo: '41', descricao: 'Aposentadoria por Idade Urbana da Pessoa com Deficiência'},
         { codigo: '46', descricao: 'Aposentadoria Especial' },
         { codigo: '57', descricao: 'Aposentadoria Especial do Professor' },
-        { codigo: '41', descricao: 'Aposentadoria por Idade Urbana da Pessoa com Deficiência'},
-        { codigo: '42', descricao: 'Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência' },
  /*     { codigo: '41', descricao: 'Aposentadoria por Idade Rural' },
         { codigo: '21', descricao: 'Pensão por Morte Urbana' },
         { codigo: '21', descricao: 'Pensão por Morte Rural' },
