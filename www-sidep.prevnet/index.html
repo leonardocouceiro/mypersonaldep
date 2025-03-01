@@ -106,7 +106,7 @@
             </div>
             -->
             <div class="container-fluid bg-primary">
-                <h3 class="text-center"><strong>SIDEP - Sistema de Despachos Previdenciários</strong></h3>
+                <h5 class="text-center"><strong>SIDEP - Sistema de Despachos Previdenciários</strong></h5>
             </div>
         </div>
 
@@ -120,9 +120,9 @@
         </div>
         -->
 
-        <div class="container-fluid">
-            <div uib-alert ng-repeat="msg in msgUsuario" ng-class="'alert-danger'"><b>{{msg.texto1}}<br /> {{msg.texto2}}</b></div>
-        </div>
+<!--         <div class="container-fluid">
+            <h6><div uib-alert ng-repeat="msg in msgUsuario" ng-class="'alert-danger'"><b>{{msg.texto1}} {{msg.texto2}}</b></div> </h6>
+        </div> -->
         <div class="container-fluid">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -153,6 +153,51 @@
                 <div id="despacho" class="container-fluid tab-pane fade in active">
                     <form class="form-inline">
                         <div class="form-group">
+                            <div class="form-group">
+                                <label for="esp">Espécie:</label>
+                                <div style="clear: both;"></div>
+                                <strong><select class="form-control" ng-model="especieSelecionada" ng-options="especie.codigo + ' - ' + especie.descricao  for especie in especies" ng-change="montarDespacho()" id="esp" ></select></strong>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': !numeroBeneficioValido || numeroBeneficio == '000.000.000-0' || numeroBeneficio == '00000000.0.00000/00-0'}">
+                                <label for="nb">Nº {{tipoIdentificador}}</label>
+                                <div style="clear: both;"></div>
+                                <input type="text" class="form-control" ng-model="numeroBeneficio" style="font-weight:bold" id="nb" ng-focus="desformataNB()" ng-blur="formataNB()" placeholder="Número {{tipoIdentificador}}" size="17" maxlength="{{tamanhoIdentificador}}" oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': nomeInteressado == ''}">
+                                <label for="req">Interessado:</label>
+                                <div style="clear: both;"></div>
+                                <input type="text" class="form-control text-uppercase" ng-model="nomeInteressado" style="font-weight:bold" id="req" placeholder="Nome do Interessado" size="47" maxlength="70" />
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': !itensMotivoDespacho.txtDataDER}">
+                                <label for="der">DER:</label>
+                                <div style="clear: both;"></div>
+                                <input type="text" 
+                                    class="form-control text-uppercase" 
+                                    ng-model="itensMotivoDespacho.txtDataDER" 
+                                    ng-init="applyDateMask()" 
+                                    style="font-weight:bold" 
+                                    id="der" 
+                                    placeholder="DD/MM/YYYY" 
+                                    size="10" 
+                                    maxlength="10" />
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': !itensMotivoDespacho.OlDoBeneficio}">
+                                <label for="req">OL:</label>
+                                <div style="clear: both;"></div>
+                                <input type="text" class="form-control text-uppercase" 
+                                    ng-model="itensMotivoDespacho.OlDoBeneficio" 
+                                    ng-init="applyOlMask()"
+                                    style="font-weight:bold" 
+                                    id="ol" 
+                                    placeholder="00.000.000" 
+                                    size="10" 
+                                    maxlength="10" />
+                            </div>
+
+                        </div>
+                    </form>
+                    <form class="form-inline">
+                        <div class="form-group">
                             <label for="tipo">Despacho:</label>
                             <div style="clear: both;"></div>
                             <div class="btn-group">
@@ -160,68 +205,6 @@
                                 <label class="btn btn-primary" ng-model="tipoDespacho" uib-btn-radio="'Concessão'" ng-change="montarDespacho()"><strong>Concessão</strong></label>
                                 <label class="btn btn-primary" ng-model="tipoDespacho" uib-btn-radio="'Análise'" ng-change="montarDespacho()"><strong>Análise</strong></label>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="esp">Espécie:</label>
-                            <div style="clear: both;"></div>
-                            <strong><select class="form-control" ng-model="especieSelecionada" ng-options="especie.codigo + ' - ' + especie.descricao  for especie in especies" ng-change="montarDespacho()" id="esp"></select></strong>
-                        </div>
-                        <div class="form-group" ng-class="{'has-error': !numeroBeneficioValido || numeroBeneficio == '000.000.000-0' || numeroBeneficio == '00000000.0.00000/00-0'}">
-                            <label for="nb">Nº {{tipoIdentificador}}</label>
-                            <div style="clear: both;"></div>
-                            <input type="text" class="form-control" ng-model="numeroBeneficio" style="font-weight:bold" id="nb" ng-focus="desformataNB()" ng-blur="formataNB()" placeholder="Número {{tipoIdentificador}}" size="17" maxlength="{{tamanhoIdentificador}}" oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
-                        </div>
-                        <div class="form-group" ng-class="{'has-error': nomeInteressado == ''}">
-                            <label for="req">Interessado:</label>
-                            <div style="clear: both;"></div>
-                            <input type="text" class="form-control text-uppercase" ng-model="nomeInteressado" style="font-weight:bold" id="req" placeholder="Nome do Interessado" size="47" maxlength="70" />
-                        </div>
-                        
-<!--
-                              <div class="form-group" ng-class="{'has-error': !itensMotivoDespacho.txtDataDER}">
-                            <label for="der">DER:</label>
-                            <div style="clear: both;"></div>
-                            <input type="text" 
-                                   class="form-control text-uppercase" 
-                                   ng-model="itensMotivoDespacho.txtDataDER" 
-                                   style="font-weight:bold" 
-                                   id="der" 
-                                   placeholder="DD/MM/YYYY" 
-                                   size="10" 
-                                   maxlength="10"/>
-                        </div>                  
-
-
-
--->
-                        <div class="form-group" ng-class="{'has-error': !itensMotivoDespacho.txtDataDER}">
-                            <label for="der">DER:</label>
-                            <div style="clear: both;"></div>
-                            <input type="text" 
-                                class="form-control text-uppercase" 
-                                ng-model="itensMotivoDespacho.txtDataDER" 
-                                ng-init="applyDateMask()" 
-                                style="font-weight:bold" 
-                                id="der" 
-                                placeholder="DD/MM/YYYY" 
-                                size="10" 
-                                maxlength="10" />
-                        </div>
-
-
-
-
-                        <div class="form-group" ng-class="{'has-error': !itensMotivoDespacho.OlDoBeneficio}">
-                            <label for="req">OL:</label>
-                            <div style="clear: both;"></div>
-                            <input type="text" class="form-control text-uppercase" 
-                                ng-model="itensMotivoDespacho.OlDoBeneficio" 
-                                ng-init="applyOlMask()"
-                                style="font-weight:bold" 
-                                id="ol" 
-                                placeholder="00.000.000" 
-                                size="10" 
-                                maxlength="10" />
                         </div>
                     </form>
                     <br/>
@@ -248,7 +231,7 @@
                                         </div>
                                     </div>
                                     <div class="panel-body">
-                                        <p><strong>Motivo(s): {{tipoDespacho}} de {{especieSelecionada.descricao}}</strong></p>
+                                        <!-- <p><strong>Motivo(s): {{tipoDespacho}} de {{especieSelecionada.descricao}}</strong></p> -->
                                         <!-- BLOCO DE MOTIVOS DE INDEFERIMENTO -->
                                         <div ng-show="tipoDespacho == 'Indeferimento'" id="motIndef">
                                             <!-- Motivos Indeferimento Pensão -->
