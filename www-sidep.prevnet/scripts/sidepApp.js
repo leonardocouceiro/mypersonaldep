@@ -339,12 +339,51 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         conclusao: "Benefício indeferido, e a tarefa correspondente encerrada, nesta data."
     };
 
+
     $scope.carregarInicio = function () {
  
         $scope.buscarDadosUsuario();
         $scope.montarDespacho();
+        $scope.criarExigencia();
 
     };
+
+    let listaExigencia = [];
+
+    $scope.itensDaExigencia = {
+        chkIdentReq: false,
+        chkCTPS: false,
+        chkPPP: false,
+        chkAutodecSegEspRural: false,
+        chkProcuracao: false,
+        chkExigGenericaCTC: false,
+        chkExigGenericaDTC: false
+    };
+    $scope.textoExigencia = {
+        chkIdentReq: "RG ou documento de identificação com foto, CPF, Certidão de Nascimento ou Casamento e comprovante de endereço.",
+        chkCTPS: "Todas as Carteiras de Trabalho emitidas em meio físico que possuir. Esclarecemos que devem ser digitalizadas todas as páginas da CTPS que contenham anotações, inclusive da página com foto, identificação, vínculos empregatícios, contribuições sindicais, alterações de salários, férias, FGTS e anotações gerais.",
+        chkPPP: "Apresentar formulários ( PPP, DIRBEN8030 etc.) em nome do requerente que comprovem os períodos trabalhados em condições especiais conforme alegado no protocolo.",
+        chkAutodecSegEspRural: "- Apresentar a autodeclaração do trabalhador rural preenchida e assinada em todas as folhas cujo modelo consta em anexo.",
+        chkProcuracao: "Procuração assinada pelas partes. É necessário apresentar procuração pública se o representado ou representante for analfabeto (exceto nos casos em que o procurador for advogado). A procuração pode ser feita nos moldes da Instrução Normativa PRES/INSS nº 128/2022, cujo modelo consta no site oficial do INSS.ao",
+        chkExigGenericaCTC: "- Apresentar Certidão de Tempo de Contribuição(CTC), conforme o modelo do anexo XV da IN 128/2022, dos períodos que deseja incluir nesse processo que tenham sido contribuídos para o Regime Próprio de Previdência Social, salientando que estes documentos só serão válidos caso sejam homologados pela Unidade Gestora do RPPS. Caso a CTC não possua link para verificação da autenticidade online a mesma deve ser apresentada em alguma Agência da Previdência Social para autenticação no processo pelo INSS.",
+        chkExigGenericaDTC: "- Apresentar Declaração de Tempo de Contribuição(DTC), conforme o modelo do anexo IV da IN 128/2022, para os períodos que esteve vinculado a orgãos públicos com contribuições efetuadas para o Regime Geral de Previdência Social, e que não conste registro na carteira de trabalho."
+    };
+    
+    $scope.criarExigencia = function () {
+        
+     
+        $scope.conteudoEditorExigencia = "";
+        let indiceItem = 1;
+    
+        angular.forEach($scope.itensDaExigencia, function (value, key) {
+            if (value) { // Se o checkbox estiver marcado (true)
+                $scope.conteudoEditorExigencia += "<p> - " + $scope.textoExigencia[key] + "</p>";
+                indiceItem++;
+            }
+        });
+
+        };
+
 
     $scope.buscarDadosUsuario = function () {
         $scope.nomeUsuario = $cookies.get("nomeusuario");
@@ -4158,6 +4197,51 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
 
           /* alert("Texto copiado com sucesso!"); */
     };
+    $scope.copiarExigencia = function() {
+        // Criar um elemento div temporário
+        var tempDiv = document.createElement("div");
+    
+        // Definir o HTML da div temporária como o conteúdo do editor
+        tempDiv.innerHTML = $scope.conteudoEditorExigencia;
+    
+        // Adicionar temporariamente ao corpo do documento
+        document.body.appendChild(tempDiv);
+    
+        // Criar um Range para selecionar apenas o texto dentro da div (sem tags HTML)
+        var range = document.createRange();
+        range.selectNodeContents(tempDiv);
+        
+        // Selecionar o conteúdo formatado
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    
+        // Copiar o conteúdo selecionado
+        document.execCommand("copy");
+    
+        // Limpar a seleção
+        selection.removeAllRanges();
+    
+        // Remover a div temporária do DOM
+        document.body.removeChild(tempDiv);
+    
+        // Mensagem de feedback (opcional)
+ /*        alert("Exigência copiada com sucesso!"); */
+    };
+    $scope.reiniciarExigencia = function() {
+
+        $scope.itensDaExigencia = {
+        chkIdentReq: false,
+        chkCTPS: false,
+        chkPPP: false,
+        chkAutodecSegEspRural: false,
+        chkProcuracao: false,
+        chkExigGenericaCTC: false,
+        chkExigGenericaDTC: false
+    };
+        $scope.conteudoEditorExigencia = ""
+
+    }
 
 
 });
