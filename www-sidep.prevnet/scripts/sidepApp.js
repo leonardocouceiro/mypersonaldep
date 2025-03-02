@@ -47,8 +47,8 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
 
     //Seção do Benefício
     $scope.especies = [
-        { codigo: '41', descricao: 'Aposentadoria por Idade Urbana' },
         { codigo: '42', descricao: 'Aposentadoria por Tempo de Contribuição' },
+        { codigo: '41', descricao: 'Aposentadoria por Idade Urbana' },        
         { codigo: '42', descricao: 'Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência' },
         { codigo: 'CTC', descricao: 'Certidão de Tempo de Contribuição' },
         { codigo: '41', descricao: 'Aposentadoria por Idade Urbana da Pessoa com Deficiência'},
@@ -962,7 +962,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
 
 
                 if ($scope.itensEspecial.chkPeriodosNaoEnq) {
-                    conclusaoEspecial = "As atividades exercidas nos períodos de " + $scope.itensEspecial.txtPeriodosEspeciaisNaoEnq + " não foram enquadradas como especiais pela Perícia Médica.";
+                    conclusaoEspecial = "As atividades exercidas no(s) período(s) de " + $scope.itensEspecial.txtPeriodosEspeciaisNaoEnq + " não foram enquadradas como especiais pela Perícia Médica.";
                 }
                 else {
                     conclusaoEspecial = "Alguns períodos encaminhados para análise médico-pericial não foram enquadrados.";
@@ -979,7 +979,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
                 };
 
                 if ($scope.itensEspecial.chkPeriodosNaoEnq) {
-                    listaMotivos.push("As atividades exercidas nos períodos de " + $scope.itensEspecial.txtPeriodosEspeciaisNaoEnq + " não foram enquadradas como especiais pela Perícia Médica.");
+                    listaMotivos.push("As atividades exercidas no(s) período(s) de " + $scope.itensEspecial.txtPeriodosEspeciaisNaoEnq + " não foram enquadradas como especiais pela Perícia Médica.");
                 }
                 
                 qtdMotivos = listaMotivos.length;
@@ -2352,7 +2352,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
 
         if ($scope.itensMotivoDespacho.chkFaltaTempo || $scope.itensMotivoDespacho.chkNaoNovasRegrasEC103) {
             if ($scope.itensMotivoDespacho.txtTempoAnos != "") {
-                tempoTotal += $scope.itensMotivoDespacho.txtTempoAnos + " anos ";
+                tempoTotal += $scope.itensMotivoDespacho.txtTempoAnos + " anos, ";
             };
             if ($scope.itensMotivoDespacho.txtTempoMeses != "") {
                 if ($scope.itensMotivoDespacho.txtTempoAnos != "" && $scope.itensMotivoDespacho.txtTempoDias == "") {
@@ -2367,7 +2367,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
                 tempoTotal += $scope.itensMotivoDespacho.txtTempoDias + " dias";
             };
             if ($scope.itensMotivoDespacho.txtTempoAnosAnteriorEC103 != "") {
-                tempoTotalAnteriorEC += $scope.itensMotivoDespacho.txtTempoAnosAnteriorEC103 + " anos ";
+                tempoTotalAnteriorEC += $scope.itensMotivoDespacho.txtTempoAnosAnteriorEC103 + " anos, ";
             };
             if ($scope.itensMotivoDespacho.txtTempoMesesAnteriorEC103 != "") {
                 if ($scope.itensMotivoDespacho.txtTempoAnosAnteriorEC103 != "" && $scope.itensMotivoDespacho.txtTempoDiasAnteriorEC103 == "") {
@@ -2392,7 +2392,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
             listaMotivos.push("da falta de tempo de contribuição até a entrada em vigor da EC 103/2019, ocasião em que contava apenas com " + tempoTotalAnteriorEC +". Também não atendeu às exigências das regras de transição dos arts. 15, 16, 17 e 20 da EC 103/2019. O tempo total computado até a data de entrada do requerimento foi de " + tempoTotal);
         };
         if ($scope.itensMotivoDespacho.chkFaltaTempo) {
-            listaMotivos.push("do(a) Requerente não atingir o Tempo de Contribuição mínimo necessário, tendo completado apenas " + tempoTotal + "de contribuição até a Data de Entrada do Requerimento (DER), nos termos do art. 188-A do Decreto nº 3.048/99");
+            listaMotivos.push("do(a) Requerente não atingir o Tempo de Contribuição mínimo necessário, tendo completado apenas " + tempoTotal + " de contribuição até a Data de Entrada do Requerimento ("+ $scope.itensMotivoDespacho.txtDataDER +"), nos termos do art. 188-A do Decreto nº 3.048/99");
         };
         if ($scope.itensMotivoDespacho.chkFaltaCarencia) {
             listaMotivos.push("do(a) Requerente não atingir a Carência exigida, tendo completado apenas " + $scope.itensMotivoDespacho.txtCarencia + " contribuições mensais, nos termos do inc. II, art. 29 do Decreto nº 3.048/99");
@@ -2406,7 +2406,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
             listaMotivos.push("do(a) Requerente não cumprir os requisitos mínimos necessários para a Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência, para fins da LC nº 142/2013 (Tempo de Contribuição: 20 anos (mulher) / 25 anos (homem), Carência: 180 contribuições), nos termos do art. 70-B do Decreto nº 3.048/99");
         };
         if ($scope.itensMotivoDespacho.chkOutroBeneficio) {
-            listaMotivos.push("do(a) Requerente ser titular de benefício incompatível na Data de Entrada do Requerimento (DER), sob E/NB " + $scope.itensMotivoDespacho.txtOutroBeneficio + ", nos termos do art. 167 do Decreto nº 3.048/99");
+            listaMotivos.push("do(a) Requerente ser titular de benefício incompatível na Data de Entrada do Requerimento ("+ $scope.itensMotivoDespacho.txtDataDER +"), sob E/NB " + $scope.itensMotivoDespacho.txtOutroBeneficio + ", nos termos do art. 167 do Decreto nº 3.048/99");
         };
         
         let qtdMotivos = listaMotivos.length;
@@ -2448,7 +2448,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         }
   
         if ($scope.itensMotivoDespacho.chkOutroBeneficio) {
-            listaMotivos.push("do(a) Requerente ser titular de benefício incompatível na Data de Entrada do Requerimento (DER), sob E/NB " + $scope.itensMotivoDespacho.txtOutroBeneficio + ", nos termos do art. 167 do Decreto nº 3.048/99");
+            listaMotivos.push("do(a) Requerente ser titular de benefício incompatível na Data de Entrada do Requerimento ("+ $scope.itensMotivoDespacho.txtDataDER +"), sob E/NB " + $scope.itensMotivoDespacho.txtOutroBeneficio + ", nos termos do art. 167 do Decreto nº 3.048/99");
         };
 
     let qtdMotivos = listaMotivos.length;
@@ -4047,7 +4047,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
 
     //Limpa/Reinicia Uso:
     $scope.Reiniciar = function () {
-        $scope.especieSelecionada = $scope.especies[0];
+       // $scope.especies[0] = $scope.especieSelecionada;
         $scope.numeroBeneficio = "";
         $scope.nomeInteressado = "";
         $scope.tipoDespacho = "Indeferimento";
@@ -4121,7 +4121,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         $scope.itensContribuicao.txtFacPlanoSimplificado = "";
         $scope.itensContribuicao.txtFacConcomitante = "";
 
-        $scope.itensEspecial.chkEspecial = true;
+        $scope.itensEspecial.chkEspecial = false;
         $scope.itensEspecial.chkEnqCatProfissional = false;
         $scope.itensEspecial.chkEnqAgenteNocivo = false;
         $scope.itensEspecial.chkEnqNbAnterior = false;
@@ -4133,7 +4133,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         $scope.itensEspecial.txtEspecialConsiderado = "Enc Com Periodos Nao Enq";
 
 
-        $scope.itensRural.chkRural = true;
+        $scope.itensRural.chkRural = false;
         $scope.itensRural.txtRuralConsiderado = "Não há";
         $scope.itensRural.chkSemDocumentos = false;
         $scope.itensRural.chkNaoCompoeGrupoFamiliar = false;
@@ -4141,12 +4141,12 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         $scope.itensRural.chkAtividadeRemunerada = false;
         $scope.itensRural.chkRemuneradaTurismoEmpregados = false;
 
-        $scope.itensExigencia.chkExigencia = true;
+        $scope.itensExigencia.chkExigencia = false;
         $scope.itensExigencia.txtExigenciaConsiderado = "Não há";
         $scope.itensExigencia.txtExigenciaParcialNaoCumprida = "";
         $scope.itensExigencia.txtExigenciaNaoCumprida = "Não apresentou";
 
-        $scope.itensProcedimento.chkProcedimento = true;
+        $scope.itensProcedimento.chkProcedimento = false;
         $scope.itensProcedimento.chkAvaliacaoPericia = false;
         $scope.itensProcedimento.chkAvaliacaoSocial = false;
         $scope.itensProcedimento.chkJustAdministrativa = false;
@@ -4157,7 +4157,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         $scope.itensProcedimento.txtEncontroContas = "CN";
         $scope.itensProcedimento.txtValorEncontroContas = "";
 
-        $scope.itensOutro.chkOutro = true;
+        $scope.itensOutro.chkOutro = false;
         $scope.itensOutro.chkACP = false;
         $scope.itensOutro.chkConsulta = false;
         $scope.itensOutro.chkAlteracaoEspecie = false;
