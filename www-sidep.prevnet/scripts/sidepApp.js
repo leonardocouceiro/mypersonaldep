@@ -249,7 +249,7 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         chkNaoEnqAgenteNocivo: false,
         chkNaoEnqNbAnterior: false,
         chkNaoEnqAgenteNocivoAusente: false,
-        txtEspecialConsiderado: "Não há"
+        txtEspecialConsiderado: "Enc Com Periodos Nao Enq"
     };
     //Campos da Atividade Rural
     $scope.itensRural = {
@@ -956,8 +956,47 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         let conclusaoEspecial = "";
         let listaMotivos = [];
         let qtdMotivos = 0;
-
+        
         switch ($scope.itensEspecial.txtEspecialConsiderado) {
+            case 'Enc Com Periodos Nao Enq':
+
+
+                if ($scope.itensEspecial.chkPeriodosNaoEnq) {
+                    conclusaoEspecial = "As atividades exercidas nos períodos de " + $scope.itensEspecial.txtPeriodosEspeciaisNaoEnq + " não foram enquadradas como especiais pela Perícia Médica.";
+                }
+                else {
+                    conclusaoEspecial = "Alguns períodos encaminhados para análise médico-pericial não foram enquadrados.";
+                };
+
+                
+                break;
+            case 'Importada':
+                conclusaoEspecial = "Foram importadas para o presente benefício as análises de períodos especiais efetuadas nos benefícios anteriores, com reanálise dispensada, nos termos do art. 270 da Instrução Normativa nº 128/2022 e do art. 313 do Livro II das Portarias Procedimentais.";
+                listaMotivos.length = 0;
+
+                if ($scope.itensEspecial.chkAnalImportComEnc) {
+                    listaMotivos.push("Os períodos não analisados no processo anterior foram analisados administrativamente e ou encaminhados para análise médico pericial.");
+                };
+
+                if ($scope.itensEspecial.chkPeriodosNaoEnq) {
+                    listaMotivos.push("As atividades exercidas nos períodos de " + $scope.itensEspecial.txtPeriodosEspeciaisNaoEnq + " não foram enquadradas como especiais pela Perícia Médica.");
+                }
+                
+                qtdMotivos = listaMotivos.length;
+
+                for (i = 0; i < qtdMotivos; i++) {
+                    if (i > 0) {
+                        if (i == qtdMotivos - 1) {
+                            conclusaoEspecial += " ";
+                        } else {
+                            conclusaoEspecial += " ";
+                        };
+                    };
+
+                    conclusaoEspecial += listaMotivos[i];
+                };
+
+                break;
             case 'Não há':
                 conclusaoEspecial = "Não houve a apresentação de documentos para comprovação de Atividade Especial, nem quaisquer períodos enquadrados de outra maneira.";
                 break;
@@ -4090,7 +4129,9 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         $scope.itensEspecial.chkNaoEnqAgenteNocivo = false;
         $scope.itensEspecial.chkNaoEnqNbAnterior = false;
         $scope.itensEspecial.chkNaoEnqAgenteNocivoAusente = false;
-        $scope.itensEspecial.txtEspecialConsiderado = "Não há";
+        $scope.itensEspecial.txtPeriodosEspeciaisNaoEnq = false;
+        $scope.itensEspecial.txtEspecialConsiderado = "Enc Com Periodos Nao Enq";
+
 
         $scope.itensRural.chkRural = true;
         $scope.itensRural.txtRuralConsiderado = "Não há";

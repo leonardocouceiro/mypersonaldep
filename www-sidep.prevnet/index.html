@@ -1562,6 +1562,38 @@
                                         <div ng-show="itensEspecial.chkEspecial">
                                             <div class="form-group">
                                                 <div class="radio">
+                                                    <label><input type="radio" ng-model="itensEspecial.txtEspecialConsiderado" ng-change="montarDespacho()" value="Enc Com Periodos Nao Enq"><strong>Períodos Encaminhados a PMF e alguns não foram enquadrados</strong></label>
+                                                    <div ng-show="itensEspecial.txtEspecialConsiderado === 'Enc Com Periodos Nao Enq'">
+                                                        <div class="container">
+                                                            <label><b>Opções</b></label>
+                                                            <div class="checkbox">
+                                                                <label><input type="checkbox" value="" ng-model="itensEspecial.chkPeriodosNaoEnq" ng-change="montarDespacho()">Mencionar periodos não enquadrados pela PMF</label>
+                                                            </div>
+                                                            <div style="margin-left:20px" ng-show="itensEspecial.chkPeriodosNaoEnq">
+                                                                <input type="text" class="form-control" ng-model="itensEspecial.txtPeriodosEspeciaisNaoEnq" ng-blur="montarDespacho()"  style="width:750px" placeholder="Períodos" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <label><input type="radio" ng-model="itensEspecial.txtEspecialConsiderado" ng-change="montarDespacho()" value="Importada"><strong>Análises importadas de NB Anterior</strong></label>
+                                                    <div ng-show="itensEspecial.txtEspecialConsiderado === 'Importada'">
+                                                        <div class="container">
+                                                            <label><b>Opções</b></label>
+                                                            <div class="checkbox">
+                                                                <label><input type="checkbox" value="" ng-model="itensEspecial.chkAnalImportComEnc" ng-change="montarDespacho()">Há períodos Encaminhados a PMF no atual processo</label>
+                                                            </div>
+                                                            <div class="checkbox">
+                                                                <label><input type="checkbox" value="" ng-model="itensEspecial.chkPeriodosNaoEnq" ng-change="montarDespacho()">Mencionar periodos não enquadrados pela PMF</label>
+                                                            </div>
+                                                            <div style="margin-left:20px" ng-show="itensEspecial.chkPeriodosNaoEnq">
+                                                                <input type="text" class="form-control" ng-model="itensEspecial.txtPeriodosEspeciaisNaoEnq" ng-blur="montarDespacho()"  style="width:750px" placeholder="Períodos" >
+                                                            </div>
+                                                            <div class="checkbox">
+                                                                <label><input type="checkbox" value="" ng-model="itensEspecial.chkPPPNaoEnc" ng-change="montarDespacho()">Alguns PPPs Nao Foram Encaminhados para Analise</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
                                                     <label><input type="radio" ng-model="itensEspecial.txtEspecialConsiderado" ng-change="montarDespacho()" value="Não há"><strong>Não apresentou/Não há Atividade Especial a ser analisada</strong></label>
                                                     <label><input type="radio" ng-model="itensEspecial.txtEspecialConsiderado" ng-change="montarDespacho()" value="Reconhecida"><strong>Todos os períodos de Atividade Especial requeridos foram enquadrados</strong></label>
                                                     <div ng-show="itensEspecial.txtEspecialConsiderado === 'Reconhecida'">
