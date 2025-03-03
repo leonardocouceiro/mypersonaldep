@@ -2141,7 +2141,7 @@
                                                     <div class="form-group">
                                                         <div style="margin:15px">
                                                             <div class="checkbox">
-                                                                <label><input type="checkbox" value="" ng-model="itensDaExigencia.chkIdentReq" ng-change="criarExigencia()"><strong>RG ou Doc. de Identificação com foto</strong></label>
+                                                                <label><input type="checkbox" value="" ng-model="itensDaExigencia.chkIdentReq" ng-change="criarExigencia()"><strong>RG, CPF, Cert. Nasc ou Cert. Casamento e Comprovante Resideência</strong></label>
                                                             </div>
                                                             <div class="checkbox">
                                                                 <label><input type="checkbox" value="" ng-model="itensDaExigencia.chkCTPS" ng-change="criarExigencia()"><strong>CTPSs em meio físico</strong></label>
@@ -2160,6 +2160,30 @@
                                                             </div>
                                                             <div class="checkbox">
                                                                 <label><input type="checkbox" value="" ng-model="itensDaExigencia.chkExigGenericaDTC" ng-change="criarExigencia()"><strong>Exigencia Genérica DTC</strong></label>
+                                                            </div>
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" ng-model="itensDaExigencia.chkComprovarVinc">
+                                                                    <strong>Docs Contemp para Comprovar Vínculos Específicos, nao digitar, apenas colar vinculos aqui.</strong>
+                                                                </label>
+                                                            </div>
+                                                            
+                                                            <div style="margin-left:20px" ng-show="itensDaExigencia.chkComprovarVinc">
+                                                                <input type="text" id="inputVincComprovar"
+                                                                    class="form-control"
+                                                                    ng-model="textoExigencia.txtVincComprovar"
+                                                                    ng-change="criarExigencia()"
+                                                                    style="width:670px"
+                                                                    placeholder="Vínculos">
+                                                            </div>
+                                                            
+                                                            <!-- <p>{{conteudoEditorExigencia}}</p> Exibição do conteúdo -->
+                                                            
+                                                            
+                                                            
+                                                            <hr />
+                                                            <div class="checkbox">
+                                                                <label><input type="checkbox" value="" ng-model="itensDaExigencia.chkObsQualidadeDocs" ng-change="criarExigencia()"><strong>Obs quanto a Qualidade dos Documentos a serem Anexados</strong></label>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -359,30 +359,48 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         chkExigGenericaCTC: false,
         chkExigGenericaDTC: false
     };
+
+    
     $scope.textoExigencia = {
-        chkIdentReq: "RG ou documento de identificação com foto, CPF, Certidão de Nascimento ou Casamento e comprovante de endereço.",
-        chkCTPS: "Todas as Carteiras de Trabalho emitidas em meio físico que possuir. Esclarecemos que devem ser digitalizadas todas as páginas da CTPS que contenham anotações, inclusive da página com foto, identificação, vínculos empregatícios, contribuições sindicais, alterações de salários, férias, FGTS e anotações gerais.",
-        chkPPP: "Apresentar formulários ( PPP, DIRBEN8030 etc.) em nome do requerente que comprovem os períodos trabalhados em condições especiais conforme alegado no protocolo.",
-        chkAutodecSegEspRural: "- Apresentar a autodeclaração do trabalhador rural preenchida e assinada em todas as folhas cujo modelo consta em anexo.",
-        chkProcuracao: "Procuração assinada pelas partes. É necessário apresentar procuração pública se o representado ou representante for analfabeto (exceto nos casos em que o procurador for advogado). A procuração pode ser feita nos moldes da Instrução Normativa PRES/INSS nº 128/2022, cujo modelo consta no site oficial do INSS.ao",
-        chkExigGenericaCTC: "Apresentar Certidão de Tempo de Contribuição(CTC), conforme o modelo do anexo XV da IN 128/2022, dos períodos que deseja incluir nesse processo que tenham sido contribuídos para o Regime Próprio de Previdência Social, salientando que estes documentos só serão válidos caso sejam homologados pela Unidade Gestora do RPPS. Caso a CTC não possua link para verificação da autenticidade online a mesma deve ser apresentada em alguma Agência da Previdência Social para autenticação no processo pelo INSS.",
-        chkExigGenericaDTC: "Apresentar Declaração de Tempo de Contribuição(DTC), conforme o modelo do anexo IV da IN 128/2022, para os períodos que esteve vinculado a orgãos públicos com contribuições efetuadas para o Regime Geral de Previdência Social, e que não conste registro na carteira de trabalho."
+        chkIdentReq: "- RG ou documento de identificação com foto, CPF, Certidão de Nascimento ou Casamento e comprovante de endereço.",
+        chkCTPS: "- Todas as Carteiras de Trabalho emitidas em meio físico que possuir. Esclarecemos que devem ser digitalizadas todas as páginas da CTPS que contenham anotações, inclusive da página com foto, identificação, vínculos empregatícios, contribuições sindicais, alterações de salários, férias, FGTS e anotações gerais.",
+        chkPPP: "- Apresentar formulários ( PPP, DIRBEN8030 etc.) em nome do requerente que comprovem os períodos trabalhados em condições especiais conforme alegado no protocolo.",
+        chkAutodecSegEspRural: "- Apresentar a autodeclaração do segurado especial rural preenchida e assinada em todas as folhas cujo modelo consta em anexo.",
+        chkProcuracao: "- Procuração assinada pelas partes. É necessário apresentar procuração pública se o representado ou representante for analfabeto (exceto nos casos em que o procurador for advogado). A procuração pode ser feita nos moldes da Instrução Normativa PRES/INSS nº 128/2022, cujo modelo consta no site oficial do INSS.",
+        chkExigGenericaCTC: "- Apresentar Certidão de Tempo de Contribuição(CTC), conforme o modelo do anexo XV da IN 128/2022, dos períodos que deseja incluir nesse processo que tenham sido contribuídos para o Regime Próprio de Previdência Social, salientando que estes documentos só serão válidos caso sejam homologados pela Unidade Gestora do RPPS. Caso a CTC não possua link para verificação da autenticidade online a mesma deve ser apresentada em alguma Agência da Previdência Social para autenticação no processo pelo INSS.",
+        chkExigGenericaDTC: "- Apresentar Declaração de Tempo de Contribuição(DTC), conforme o modelo do anexo IV da IN 128/2022, para os períodos que esteve vinculado a orgãos públicos com contribuições efetuadas para o Regime Geral de Previdência Social, e que não conste registro na carteira de trabalho.",
+        chkObsQualidadeDocs: "Obs.: O(s) documento(s) deve(m) ser digitalizado(s) e anexado(s) em cores, conforme o caso, de forma perfeitamente legível e na mesma ordem sequencial do(s) documento(s) original(is).",
+        txtVincComprovar: "" // Inicialmente vazio
     };
     
+    $scope.itensDaExigencia = {
+        chkComprovarVinc: false
+    };
+    
+    // Função que atualiza o conteúdo dinamicamente
     $scope.criarExigencia = function () {
-        
-     
-        $scope.conteudoEditorExigencia = "";
-        let indiceItem = 1;
+        let exigenciaTexto = "";
     
         angular.forEach($scope.itensDaExigencia, function (value, key) {
-            if (value) { // Se o checkbox estiver marcado (true)
-                $scope.conteudoEditorExigencia += "<p> - " + $scope.textoExigencia[key] + "</p>";
-                indiceItem++;
+            if (value) { // Checkbox marcado
+                if (key === "chkComprovarVinc") {
+                    if ($scope.textoExigencia.txtVincComprovar.trim() !== "") {
+                        exigenciaTexto += "<p>- Apresentar documentos contemporâneos, além dos documentos apresentados, que comprovem o(s) vínculo(s) de trabalho com a(s) empresa(s): " + $scope.textoExigencia.txtVincComprovar + ". Dentre outros podem ser apresentados os seguintes documentos: Termo de Rescisão do Contrato de Trabalho, Extrato Analítico do FGTS carimbado e assinado pelo emissor do documento e Ficha de Registro de Empregado Autenticada mais declaração da empresa.</p>";
+                    }
+                } else {
+                    exigenciaTexto += "<p>" + $scope.textoExigencia[key] + "</p>";
+                }
             }
         });
-
-        };
+    
+        // Atualiza a exigência apenas se houver alteração
+        if ($scope.conteudoEditorExigencia !== exigenciaTexto) {
+            $scope.conteudoEditorExigencia = exigenciaTexto;
+        }
+    };
+    
+    
+    
 
 
     $scope.buscarDadosUsuario = function () {
