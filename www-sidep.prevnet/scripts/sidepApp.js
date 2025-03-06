@@ -4069,7 +4069,10 @@ app.controller('spCtrl', function ($scope, $timeout, $filter, $cookies) {
         $scope.numeroBeneficio = "";
         $scope.nomeInteressado = "";
         $scope.tipoDespacho = "Indeferimento";
+        $scope.itensMotivoDespacho.txtDataDER = "";
+        $scope.itensMotivoDespacho.OlDoBeneficio = "";
         $scope.conteudoEditor = "";
+
 
         $scope.itensMotivoDespacho.chkQualSeg = false;
         $scope.itensMotivoDespacho.chkComprDepend = false;
